@@ -1,0 +1,72 @@
+<div id="white">
+    <div class="settings-table-wrapper">
+        <h4>Настройки обучающей сессии</h4>
+        <table class="table table-striped settings-table">
+            <tr>
+                <td>Режим обучения</td>
+                <td>
+                    <select class="selectpicker" id="language">
+                        <option value="english">Учить английский</option>
+                        <option value="russian">Учить русский</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Порядок</td>
+                <td>
+                    <select class="selectpicker" id="order">
+                        <option value="sequential">Последовательный</option>
+                        <option value="random">Случайный</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Категории</td>
+                <td>
+                    <select class="selectpicker " id="category-list-session">
+                        <% _.each(categories.models, function(category, index) { %>
+                            <% if(index==0) { %>
+                                <option>Все</option>
+                                <% } %>
+                                    <option>
+                                        <%= category.get("categoryName") %>
+                                    </option>
+                                    <% }); %>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Количество карточек</td>
+                <td>
+                    <select class="selectpicker" id="count">
+                        <option>5</option>
+                        <option>10</option>
+                        <option>15</option>
+                        <option>20</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <!-- Large modal -->
+        <button class="btn btn-default start-session">Начать сессию</button>
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="ed-wrapper">
+                        <div class="left-word">Слово</div>
+                        <div class="right-word">?</div>
+                    </div>
+                    <div class="buttons-wrapper">
+                        <button type="button" class="btn btn-default btn-lg">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-default btn-lg">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+       

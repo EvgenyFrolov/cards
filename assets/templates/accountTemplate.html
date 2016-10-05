@@ -1,0 +1,14 @@
+Это проект страницы на которой будет представлена информация о вас
+
+<table class="user-info" style="width: 100%; border: 1px solid gray;">
+    <tbody>
+        <tr>
+            <td>Имя</td>
+            <td><%= userModel.get("name") %></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><%= userModel.get("email") %></td>
+        </tr>
+    </tbody>
+</table>

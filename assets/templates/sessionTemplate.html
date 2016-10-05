@@ -1,0 +1,87 @@
+<%
+            // console.log(" session.sessionCards");
+            // console.log( session.sessionCards);
+            var learnedCount = 0;
+            session.sessionCards.each(function(cardModel){
+                if(cardModel.get("learned")==true){
+                    learnedCount++;
+                }
+            });
+
+        %>
+<div class="session-wrapper">
+
+    <form class="form-inline session-settings">
+        <div class="form-group col-xs-4">
+            <label for="learning-mode">Режим обучения</label>
+            <select class="selectpicker form-control" id="learning-mode">
+                <option>Учить русский</option>
+                <option>Учить английский</option>
+            </select>
+        </div>
+        <div class="form-group col-xs-4">
+            <label for="order-mode">Порядок</label>
+            <select class="selectpicker form-control" id="order-mode">
+                <option>Последовательный</option>
+                <option>Случайный</option>
+            </select>
+        </div>
+        <div class="form-group col-xs-4">
+            <label for="add-cards-btn" class="hiddenVisibility">Добавить карточек</label>
+            <button id="add-cards-btn" class="form-control btn btn-default" disabled>Добавить</button>
+        </div>
+    </form>
+
+    <h3>Карточка номер <%= session.currentPos %></h3>
+    <div class="card">
+        <div class="wordsWrapper">
+            <div class="left english question" style="<%= (session.language=='english') ? '' : 'display:none' %>">?</div>
+            <div class="left russian answer" style="<%= (session.language=='russian') ? '' : 'display:none' %>">
+                <%= session.sessionCards.at(session.currentPos-1).get("term") %>
+            </div>
+            <div class="right russian question" style="<%= (session.language=='russian') ? '' : 'display:none' %>">?</div>
+            <div class="right english answer" style="<%= (session.language=='english') ? '' : 'display:none' %>">
+                <%= session.sessionCards.at(session.currentPos-1).get("translation") %>
+            </div>
+        </div>
+    </div>
+    <div class="buttons-wrapper">
+        <div class="number-cards">Выучено <%= learnedCount %>/<%= session.sessionCards.models.length %></div>
+        <button type="button" class="btn btn-default btn-lg prev-btn" data-placement="bottom" title="Предыдущая">
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default btn-lg answer-btn" data-placement="bottom" title="Ответ">
+            <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default btn-lg dont-know-btn" data-placement="bottom" title="Не знаю">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default btn-lg know-btn" data-placement="bottom" title="Знаю">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default btn-lg next-btn" data-placement="bottom" title="Следующая">
+            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+        </button>
+    </div>
+    <table class="resultStatus">
+        <tr>
+            <% for(var i=0; i<10; i++){ %>
+                <td class="counter <%= (session.sessionCards.at(i)!= undefined && session.sessionCards.at(i).get('learned')==true) ? 'success' : 'unsuccess' %> <%= (session.sessionCards.at(i)==undefined) ? 'hiddenVisibility' : '' %> <%= (i+1==session.currentPos) ? 'current' : '' %>" value="<%= i+1 %>">
+                    <%= i+1 %>
+                </td>
+                <% } %>
+        </tr>
+    </table>
+    <% if(session.sessionCards.models.length>10) { %>
+        <table class="resultStatus">
+            <tr>
+                <% for(var i=10; i<20; i++){ %>
+                    <td class="counter <%= (session.sessionCards.at(i)!= undefined && session.sessionCards.at(i).get('learned')==true) ? 'success' : 'unsuccess' %> <%= (session.sessionCards.at(i)==undefined) ? 'hiddenVisibility' : '' %> <%= (i+1==session.currentPos) ? 'current' : '' %>" value="<%= i+1 %>">
+                        <%= i+1 %>
+                    </td>
+                    <% } %>
+            </tr>
+        </table>
+        <% } %>
+          
+</div>

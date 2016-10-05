@@ -19,23 +19,44 @@
     <link href="assets/css/main.css" rel="stylesheet">
       <script data-main="assets/js/main" src="assets/js/lib/require/require.js"></script>
 </head>
-<body>
-  
-    
 
-   
-  
-    <!--   <script src="assets/js/cardsApp/models/appModel.js"></script>
-    <script src="assets/js/cardsApp/models/cardModel.js"></script>
-    <script src="assets/js/cardsApp/models/categoryModel.js"></script>
-    <script src="assets/js/cardsApp/models/userModel.js"></script>
-    <script src="assets/js/cardsApp/collections/cardsCollection.js"></script>
-    <script src="assets/js/cardsApp/collections/categoriesCollection.js"></script>
-    <script src="assets/js/cardsApp/views/mainView.js"></script>
-    <script src="assets/js/cardsApp/views/cardsTableView.js"></script>
-    <script src="assets/js/cardsApp/views/learningView.js"></script>
-    <script src="assets/js/cardsApp/views/sessionView.js"></script>
-    <script src="assets/js/cardsApp/views/accountView.js"></script>
-    <script src="assets/js/cardsApp/cards.js"></script> -->
+<body>
+    <!-- Static navbar -->
+    <div class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">CARDS</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li style="display:none; margin-top: 20px;"><a href="#cardsTable">Карточки</a></li>
+                    <li style="display:none; margin-top: 20px;"><a href="#learning">Обучение</a></li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <div class="user-pic empty-avatar"></div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+    <!-- +++++ Main Section (Backbone) +++++ -->
+    <div class="container main-container">
+    </div>
+    <!-- +++++ Footer Section +++++ -->
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div id="status"></div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
