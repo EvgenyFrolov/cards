@@ -34,7 +34,7 @@ require.config({
 
     	'backbone': {
     		deps: ['underscore', 'jquery'],
-            exports: 'backbone',
+            exports: 'Backbone',
     	},
 
     	'backendless': {
@@ -64,8 +64,9 @@ require.config({
 });
 
 require( [
-  		'boilerplate',
+  		'cards',
 	],
+
  	function(App){
-		//App.initialize();
+		App.initialize();
 });

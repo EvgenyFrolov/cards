@@ -1,9 +1,19 @@
-var cardsApp = cardsApp || {}
+define([
+    
+    'underscore',
+    'backbone'
 
-cardsApp.AppModel = Backbone.Model.extend({
+], function(_, Backbone) {
 
-    defaults: {
-        loggedUser: ""
-    }
+
+    var CardsAppModel = Backbone.Model.extend({
+
+        defaults: {
+            loggedUser: ""
+        }
+
+    });
+
+    return CardsAppModel;
 
 });

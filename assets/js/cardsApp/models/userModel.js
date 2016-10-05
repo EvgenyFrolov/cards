@@ -1,21 +1,26 @@
-var cardsApp = cardsApp || {}
+define([
+    
+    'underscore',
+    'backbone'
 
-cardsApp.UserModel = Backbone.Model.extend({
+], function(_, Backbone) {
 
-    defaults: {
-        email: "default@email.com",
-        name: "Default name"
-        // created:1475051535000
-        // email:"test@test1.com"
-        // name:"Лев"
-        // objectId:"969674D6-CF45-3AF9-FF81-8F5FB8DEA600"
-        // ownerId:"969674D6-CF45-3AF9-FF81-8F5FB8DEA600"
-        // updated:null
-        // userStatus:"ENABLED"
-    },
-    schemaName: "Users",
-    initialize: function() {
+    var UserModel = Backbone.Model.extend({
 
-    }
-    //https://www.npmjs.com/package/backendless-backbone
+        defaults: {
+            email: "default@email.com",
+            name: "Default name"
+
+        },
+
+        schemaName: "Users",
+
+        initialize: function() {
+
+        }
+        
+    });
+
+    return UserModel;
+
 });
