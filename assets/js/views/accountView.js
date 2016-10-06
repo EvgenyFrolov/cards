@@ -1,21 +1,36 @@
-var cardsApp = cardsApp || {}
+de0fine([
+    'jquery',
+    'underscore',
+    'backbone',
+    'models/userModel',
+    'text!templates/accountTemplate'
 
-cardsApp.AccountView = Backbone.View.extend({
+], function ( $, _, Backbone, UserModel, accountTemplate ) {
+    
+    var  AccountView = Backbone.View.extend({
 
-    tagName: 'div',
-    template: $("#accountTemplate").html(),
-    events: {
+        tagName: 'div',
+        el: $("#accountTemplate"),
+        
 
-    },
+        initialize: function() {
+            this.model = new UserModel();
+            this.render();
+        },
 
-    initialize: function() {
-        this.render();
-    },
+        render: function() {
 
-    render: function() {
-        var tmpl = _.template(this.template);
-        this.$el.append(tmpl( /*{ "categories": this.categories }*/ ));
-        return this;
-    }
+            var templateData = {
+                user: this.model.toJSON()
+            };
+
+            var compiledTemplate = _.template( accountTemplate, templateData );
+
+            this.$el.html( compiledTemplate );
+            return this;
+        }
+    });
+
+    return AccountView;
 
 });
