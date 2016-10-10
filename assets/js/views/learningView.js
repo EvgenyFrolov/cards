@@ -1,69 +1,80 @@
-var cardsApp = cardsApp || {}
+de0fine([
+    'jquery',
+    'underscore',
+    'backbone',
+    'veiw/sessionView',
+    'collections/cardsCollection',
+    'collections/categoriesCollection',
+    'text!templates/learningTemplate'
 
-cardsApp.LearningView = Backbone.View.extend({
+], function ( $, _, Backbone, SessionView, CardsCollection, CategoriesCollection, learningTemplate ) {
 
-    tagName: 'div',
-    template: $("#learningTemplate").html(),
-    events: {
-    	"click .start-session" : "startSession"
-    },
+    var LearningView = Backbone.View.extend({
 
-    initialize: function() {
+        tagName: 'div',
+        template: $("#learningTemplate").html(),
+        events: {
+        	"click .start-session" : "startSession"
+        },
 
-        this.cardsForLearning = new cardsApp.CardsCollection();
+        initialize: function() {
 
-        var that = this;
-        var categories = new cardsApp.CategoriesCollection();
-        categories.fetchCategory().done(function(){
-            that.categories = categories;
-            that.render();
-            that.$el.find(".selectpicker").selectpicker();
-        });
-    },
+            this.cardsForLearning = new CardsCollection();
 
-    render: function() {
-        var tmpl = _.template(this.template);
-        this.$el.append(tmpl( { "categories": this.categories } ));
-        setTimeout(function(){$("a.info-tooltip").tooltip()}, 1500);
-        return this;
-    },
-    startSession: function(){
+            var that = this;
+            var categories = new CategoriesCollection();
+            categories.fetchCategory().done(function(){
+                that.categories = categories;
+                that.render();
+                that.$el.find(".selectpicker").selectpicker();
+            });
+        },
 
-        var categoryName = $("#category-list").find("option:selected").val();
+        render: function() {
+            var tmpl = _.template(this.template);
+            this.$el.append( tmpl( { "categories": this.categories } ) );
+            setTimeout(function(){$("a.info-tooltip").tooltip();}, 1500);
+            return this;
+        },
+        startSession: function(){
 
-        var settings = {
-            "language" : $("#language").find("option:selected").text(),
-            "order": $("#order").find("option:selected").text(),
-            "count": $("#count").find("option:selected").text()
-        }
+            var categoryName = $("#category-list").find("option:selected").val();
 
-        var that = this;
+            var settings = {
+                "language" : $("#language").find("option:selected").text(),
+                "order": $("#order").find("option:selected").text(),
+                "count": $("#count").find("option:selected").text()
+            };
 
-        var defCat = "";
-        if(categoryName=="Все"){
-            defCat = that.categories.fetch();
-        }
-        else {
-            defCat = that.categories.fetchCategory(categoryName);
-        }
+            var that = this;
 
-        that.categories.each(function(category){
-            var cardsCollection = new cardsApp.CardsCollection();
-            cardsCollection = category.get("cards");
-            if(cardsCollection.length>0){
-                cardsCollection.each(function(card){
-                    card.set("learned", false);
-                    that.cardsForLearning.add(card);
-                });
+            var defCat = "";
+            if(categoryName=="Все"){
+                defCat = that.categories.fetch();
             }
-        });
-        var $elem = $(that.el).html("");
-        var session = new cardsApp.SessionView({
-            model: that.cardsForLearning,
-            el: $elem,
-            settings: settings
-        });
+            else {
+                defCat = that.categories.fetchCategory(categoryName);
+            }
 
-    }
+            that.categories.each(function(category){
+                var cardsCollection = new CardsCollection();
+                cardsCollection = category.get("cards");
+                if(cardsCollection.length>0){
+                    cardsCollection.each(function(card){
+                        card.set("learned", false);
+                        that.cardsForLearning.add(card);
+                    });
+                }
+            });
+            var $elem = $(that.el).html("");
 
+            var session = new SessionView({
+                model: that.cardsForLearning,
+                el: $elem,
+                settings: settings
+            });
+
+        }
+
+    });
 });

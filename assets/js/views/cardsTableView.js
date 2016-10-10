@@ -3,7 +3,7 @@ de0fine([
     'underscore',
     'backbone',
     'models/cardModel',
-    'models/categoryModel'
+    'models/categoryModel',
     'collections/cardsCollection',
     'collections/categoriesCollection',
     'text!templates/cardsTableTemplate'
