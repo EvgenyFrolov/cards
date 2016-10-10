@@ -156,4 +156,5 @@ define([
             console.log("FINISH");
         }
     });
+    return SessionView;
 });

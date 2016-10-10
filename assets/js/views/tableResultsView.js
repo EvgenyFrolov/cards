@@ -51,4 +51,6 @@ define([
              return this;
         },
     });
+
+    return TableView;
 });
