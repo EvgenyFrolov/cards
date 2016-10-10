@@ -4,11 +4,9 @@ define([
     'backbone',
     'backendless',
     'models/userModel',
-    'collections/cardsCollection',
-    'collections/categoriesCollection',
     'text!templates/mainWrapperTemplate'
 
-], function ( $, _, Backbone, Backendless, UserModel, SessionView, CardsCollection, CategoriesCollection, mainWrapperTemplate ) {
+], function ( $, _, Backbone, Backendless, UserModel, SessionView, mainWrapperTemplate ) {
     var  MainView = Backbone.View.extend({
 
         tagName: 'div',
