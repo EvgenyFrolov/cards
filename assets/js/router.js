@@ -2,13 +2,16 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'text!templates/accountTemplate',
-    'text!templates/cardsTableTemplate',
-    'text!templates/learningTemplate'
+    'models/appModel',
+    'views/mainView',
+    'views/cardsTableView',
+    'views/learningView',
+    'views/accountView'
 
-], function ( $, _, Backbone, accountTemplate, cardsTableTemplate, learningTemplate ) {
 
-        var Router = Backbone.Router.extend({
+], function ( $, _, Backbone, AppModel, MainView, CardsTableView, LearningView, AccountView) {
+
+    var Router = Backbone.Router.extend({
         routes: {
             "": "openMain",
             "cardsTable": "openCardsTable",
@@ -17,37 +20,53 @@ define([
 
             // "edit/:index": "editToDo",
             // "delete/:index": "delteToDo"
-        },
-        'openCardsTable': function() {
+        }
+    });
+
+     var initialize = function () {
+
+        var router = new Router();
+
+        router.on('route:openMain', function () {
+            $('.main-container').html('');
+
+            var appModel = new AppModel();
+
+            var mainView = new MainView({
+            model: appModel,
+            el: $('.main-container')
+            });
+            mainView.render();
+        });
+
+        router.on('route:openCardsTable', function() {
             $('.main-container').html('');
 
             var mainSection = new CardsTableView({
                 el: $('.main-container')
             });
-        },
+        });
 
-        'openLearning': function() {
+        router.on('route:openLearning', function() {
             $('.main-container').html('');
 
             var mainSection = new LearningView({
                 el: $('.main-container')
             });
-        },
+        });
 
-        'openAccount': function() {
+        router.on('route:openAccount', function() {
             $('.main-container').html('');
 
             var mainSection = new AccountView({
                 el: $('.main-container')
             });
-        }
+        });
 
-    });
+        Backbone.history.start(); 
+    };
 
-    var router = new Router();
-
-    Backbone.history.start();
-
-    return router;
-
+    return { 
+        initialize: initialize
+    };
 });

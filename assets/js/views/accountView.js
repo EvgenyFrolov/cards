@@ -1,9 +1,9 @@
-de0fine([
+define([
     'jquery',
     'underscore',
     'backbone',
     'models/userModel',
-    'text!templates/accountTemplate'
+    'text!templates/accountTemplate.html'
 
 ], function ( $, _, Backbone, UserModel, accountTemplate ) {
     

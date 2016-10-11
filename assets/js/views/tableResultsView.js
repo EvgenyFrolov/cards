@@ -5,7 +5,7 @@ define([
     'veiw/sessionView',
     'collections/cardsCollection',
     'collections/categoriesCollection',
-    //'text!templates/tableResultsTemplate'
+    'text!templates/tableResultsTemplate.html'
 
 ], function ( $, _, Backbone, SessionView, CardsCollection, CategoriesCollection ) {
     var rowTemplate = "<tr><td class='name'><img class='results-poster' src='<%= poster_path %>'></td><td class='age'><%= title %></td><td class='year'><%= release_date %></td><td class='intersectionImageCell'><% $.each(actorsArray, function(index, model){ var imagePath = $('#actorid_'+model).find('img').attr('src'); %> <img class='intersectionImage' src=<%= imagePath %>> <%}); %></td></tr>";

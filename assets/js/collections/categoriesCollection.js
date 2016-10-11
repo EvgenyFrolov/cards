@@ -1,10 +1,11 @@
 define([
 
+    'jquery',
     'underscore',
     'backbone',
     'models/cardModel'
 
-], function(_, Backbone, CategoryModel) {
+], function($, _, Backbone, CategoryModel) {
 
 
     var CategoriesCollection = Backbone.Collection.extend({

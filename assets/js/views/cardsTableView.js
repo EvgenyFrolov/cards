@@ -6,7 +6,7 @@ define([
     'models/categoryModel',
     'collections/cardsCollection',
     'collections/categoriesCollection',
-    'text!templates/cardsTableTemplate'
+    'text!templates/cardsTableTemplate.html'
 
 ], function ( $, _, Backbone, CardModel, CategoryModel, CardsCollection, CategoriesCollection, cardsTableTemplate ) {
 

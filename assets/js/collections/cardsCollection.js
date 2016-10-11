@@ -1,6 +1,6 @@
 define([
 
-    'jquery'
+    'jquery',
     'underscore',
     'backbone',
     'models/cardModel'

@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone',
     'backendless',
-    'text!templates/sessionTemplate'
+    'text!templates/sessionTemplate.html'
 
 ], function ( $, _, Backbone, Backendless, sessionTemplate ) {
 

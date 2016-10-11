@@ -4,9 +4,9 @@ define([
     'backbone',
     'backendless',
     'models/userModel',
-    'text!templates/mainWrapperTemplate'
+    'text!templates/mainWrapperTemplate.html'
 
-], function ( $, _, Backbone, Backendless, UserModel, SessionView, mainWrapperTemplate ) {
+], function ( $, _, Backbone, Backendless, UserModel,  SessionView, mainWrapperTemplate ) {
     var  MainView = Backbone.View.extend({
 
         tagName: 'div',
@@ -25,9 +25,9 @@ define([
             //bind listeners for header menu items
             $(".user-pic").bind("click", function(){
                 if(!$(this).hasClass("empty-avatar")){
-                    router.navigate('account', true);
+                 //   router.navigate('account', true);
                 }
-            })
+            });
         },
 
         render: function() {
@@ -94,8 +94,8 @@ define([
         userRegistered: function(user) {
             $("#status").html("регистрация прошла успешно!");
             var user = new UserModel(user);
-            appModel.set("loggedUser", user);
-            router.navigate('cardsTable', true);
+         //   appModel.set("loggedUser", user);
+           // router.navigate('cardsTable', true);
             $(".user-pic").removeClass("empty-avatar");
             $(".navbar-nav").find("li").show();
         },
@@ -115,8 +115,8 @@ define([
         handleResponse: function(loggedInUser) {
             console.log("User has been logged in - " + loggedInUser.objectId);
             $("#status").html("вы успешно вошли как " + loggedInUser.name);
-            appModel.set("loggedUser", loggedInUser);
-            router.navigate('cardsTable', true);
+            // appModel.set("loggedUser", loggedInUser);
+            // router.navigate('cardsTable', true);
             $(".user-pic").removeClass("empty-avatar");
             $(".navbar-nav").find("li").show();
         },

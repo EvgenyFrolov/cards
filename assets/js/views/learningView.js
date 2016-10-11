@@ -2,10 +2,10 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'veiw/sessionView',
+    'views/sessionView',
     'collections/cardsCollection',
     'collections/categoriesCollection',
-    'text!templates/learningTemplate'
+    'text!templates/learningTemplate.html'
 
 ], function ( $, _, Backbone, SessionView, CardsCollection, CategoriesCollection, learningTemplate ) {
 
