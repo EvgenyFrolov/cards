@@ -3,30 +3,28 @@ define([
     'underscore',
     'backbone',
     'models/userModel',
+    'models/appModel',
     'text!templates/accountTemplate.html'
 
-], function ( $, _, Backbone, UserModel, accountTemplate ) {
+], function ( $, _, Backbone, UserModel, AppModel, accountTemplate ) {
     
     var  AccountView = Backbone.View.extend({
-
+   
         tagName: 'div',
-        el: $("#accountTemplate"),
-        
+        template: accountTemplate,
+        events: {
 
-        initialize: function() {
-            this.model = new UserModel();
-            this.render();
+        },
+
+        initialize: function(options) {
+            this.options=options;
         },
 
         render: function() {
-
-            var templateData = {
-                user: this.model.toJSON()
-            };
-
-            var compiledTemplate = _.template( accountTemplate, templateData );
-
-            this.$el.html( compiledTemplate );
+            var appModel = new AppModel();
+            var tmpl = _.template(this.template);
+            var userModel = new cardsApp.UserModel(appModel.get("loggedUser"));
+            this.$el.append(tmpl( { "userModel": userModel } ));
             return this;
         }
     });

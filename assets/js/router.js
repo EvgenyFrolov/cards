@@ -13,60 +13,69 @@ define([
 
     var Router = Backbone.Router.extend({
         routes: {
-            "": "openMain",
-            "cardsTable": "openCardsTable",
-            "learning": "openLearning",
-            "account": "openAccount"
+            "": "showMain",
+            "cardsTable": "showCardsTable",
+            "learning": "showLearning",
+            "account": "showAccount"
 
             // "edit/:index": "editToDo",
             // "delete/:index": "delteToDo"
+        },
+        initialize: function(el) {
+            this.el = el;
+            this.showMain();
+
+        },
+        currentView: null,
+        switchView: function(view) {
+            if (this.currentView) {
+                // Detach the old view
+                this.currentView.remove();
+            }
+
+            // Move the view element into the DOM (replacing the old content)
+            this.el.html(view.el);
+
+            // Render view after it is in the DOM (styles are applied)
+            view.render();
+
+            this.currentView = view;
+        },
+        'showMain': function(){
+            var mainView = new  MainView();
+            this.switchView(mainView);
+        },
+        showCardsTable: function(){
+            var that = this;
+            var categories = new  CategoriesCollection();
+            categories.fetchCategory().done(function(){
+                var cardsTableView = new  CardsTableView({"categories":categories });
+                that.switchView(cardsTableView);
+                removeBlocker();
+
+                if(appModel.get("loggedUser")===""){
+                    $(".navbar-nav.logged-header").hide();
+                    $(".navbar-nav.not-logged-header").show();
+                }
+                else {
+                    $(".navbar-nav.logged-header").show();
+                    $(".navbar-nav.not-logged-header").hide();
+                }
+            });
+        },
+        showLearning: function(){
+            var that = this;
+            var categories = new  CategoriesCollection();
+            categories.fetchCategory().done(function(){
+                var learningView = new  LearningView({ "categories":categories });
+                that.switchView(learningView);
+            });
+        },
+        showAccount: function(){
+            var accountView = new  AccountView();
+            this.switchView(accountView);
         }
     });
 
-     var initialize = function () {
-
-        var router = new Router();
-
-        router.on('route:openMain', function () {
-            $('.main-container').html('');
-
-            var appModel = new AppModel();
-
-            var mainView = new MainView({
-            model: appModel,
-            el: $('.main-container')
-            });
-            mainView.render();
-        });
-
-        router.on('route:openCardsTable', function() {
-            $('.main-container').html('');
-
-            var mainSection = new CardsTableView({
-                el: $('.main-container')
-            });
-        });
-
-        router.on('route:openLearning', function() {
-            $('.main-container').html('');
-
-            var mainSection = new LearningView({
-                el: $('.main-container')
-            });
-        });
-
-        router.on('route:openAccount', function() {
-            $('.main-container').html('');
-
-            var mainSection = new AccountView({
-                el: $('.main-container')
-            });
-        });
-
-        Backbone.history.start(); 
-    };
-
-    return { 
-        initialize: initialize
-    };
+    return new Router($('.main-container') );
 });

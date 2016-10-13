@@ -12,7 +12,7 @@ define([
     var LearningView = Backbone.View.extend({
 
         tagName: 'div',
-        template: $("#learningTemplate").html(),
+        template: learningTemplate,
         events: {
         	"click .start-session" : "startSession"
         },

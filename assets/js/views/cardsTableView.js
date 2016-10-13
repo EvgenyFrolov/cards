@@ -10,37 +10,33 @@ define([
 
 ], function ( $, _, Backbone, CardModel, CategoryModel, CardsCollection, CategoriesCollection, cardsTableTemplate ) {
 
-    var CardsTableView = Backbone.View.extend({
+        var CardsTableView = Backbone.View.extend({
 
         tagName: 'div',
-        template: $("#cardsTableTemplate").html(),
+        template: cardsTableTemplate,
         events: {
             "click .add-new-card" : "openCard",
             "changed.bs.select .selectpicker#category-list" : "changeCategory", // special event of select, see for details  https://silviomoreto.github.io/bootstrap-select/options/
             "click .add-btn" : "addCard",
             "click .add-category-btn" : "addCategory",
             "click .remove-btn" : "removeCard",
-        	"click .status" : "changeStatus"
+            "click .status" : "changeStatus",
+            "change select[name='cards-storage_length']": "changePageLength"
         },
 
-        initialize: function() {
-
-            this.cardsForShowing = new CardsCollection();
+        initialize: function(options) {
+            this.options = options;
+            this.options.pageLength=10; // default pageLength
+            this.cardsForShowing = new cardsApp.CardsCollection();
             // this.cardsForShowing.bind('add', this.redrawTable, this);
             // this.model.bind('change', this.onModelAdded, this);
             // this.model.bind('remove', this.onModelAdded, this);
-            var that = this;
-            var categories = new CategoriesCollection();
-            categories.fetchCategory().done(function(){
-                that.categories = categories;
-                that.render();
-                that.$el.find(".selectpicker").selectpicker();
-            });
         },
 
         render: function() {
             var tmpl = _.template(this.template);
-            this.$el.append(tmpl({ "categories" : this.categories }));
+            this.$el.append(tmpl({ "categories" : this.options.categories }));
+            this.$el.find(".selectpicker").selectpicker();
 
             // load all by default
             this.loadCategoryTable("Все");
@@ -65,7 +61,7 @@ define([
             $.when(categories.fetchCategory(categoryName)).then(function(){
                 categories.each(function(category){
                     // get all cards for this category
-                    var cardsCollection = new CardsCollection();
+                    var cardsCollection = new cardsApp.CardsCollection();
                     cardsCollection = category.get("cards");
                     if(cardsCollection.length>0){
                         cardsCollection.each(function(card){
@@ -75,7 +71,7 @@ define([
                 });
                 var tableTemplate = _.template($('#categoryTableTemplate').html());
                 that.$el.find(".table-wrapper").html(tableTemplate({"cards": that.cardsForShowing}));
-                that.$el.find('#example').dataTable({
+                that.$el.find('#cards-storage').dataTable({
                     "columns": [
                         { "width": "25%" },
                         { "width": "25%" },
@@ -83,29 +79,25 @@ define([
                         { "width": "10%" },
                         { "width": "5%" },
                         { "width": "5%" }
-                    ]
+                    ],
+                    pageLength: that.options.pageLength
                 });
+               removeBlocker();
             });
 
         },
         addCard: function(){
             var selectedCategory = $("#category-list-add").val();
-            var newCard = new CardModel({
+            var newCard = new cardsApp.CardModel({
                 "term": $("#term").val(),
                 "translation": $("#translation").val(),
                 "category": selectedCategory,
                 "status": true,
                 "userId": appModel.get("loggedUser").objectId
             });
-
-            // this logic redraws views before we do save request to server
-            //this.cardsForShowing.create(newCard);
-            // get added model
-            //var addedCard = this.cardsForShowing.at(this.cardsForShowing.length - 1);
-
             // this logic do save request to server with new card
             var that = this;
-            var categories = new CategoriesCollection();
+            var categories = new cardsApp.CategoriesCollection();
             categories.fetchCategory(selectedCategory).done(function(){
                 var category = categories.at(0);
                 category.bind("change", that.redrawTable, that);
@@ -114,18 +106,23 @@ define([
             $('#myModal').modal('hide');
         },
         addCategory: function(){
-            var newCategory = new CategoryModel({
+            var newCategory = new cardsApp.CategoryModel({
                 categoryName: $("#category").val(),
                 userId: appModel.get("loggedUser").objectId
             });
             newCategory.save();
+            // update selecpicker, add new option after creating new category
+            this.$el.find(".selectpicker#category-list")
+                .append("<option>" + newCategory.get("categoryName") + "</option>")
+                .selectpicker('refresh');
             $('#myModalAddCategory').modal('hide');
         },
         removeCard: function(e){
             var that = this;
             var cardId = $(e.target).closest("tr").attr("id");
             var categoryName = $(e.target).closest("tr").find(".category-label").html();
-            var categories = new CategoriesCollection();
+            var categories = new cardsApp.CategoriesCollection();
+            showBlocker();
             categories.fetchCategory(categoryName).done(function(){
                 var category = categories.at(0);
                 var cardsCollection = category.get("cards");
@@ -152,7 +149,7 @@ define([
             var that = this;
             var cardId = $(e.target).closest("tr").attr("id");
             var categoryName = $(e.target).closest("tr").find(".category-label").html();
-            var categories = new CategoriesCollection();
+            var categories = new cardsApp.CategoriesCollection();
             categories.fetchCategory(categoryName).done(function(){
                 var category = categories.at(0);
                 var cardsCollection = category.get("cards");
@@ -161,8 +158,10 @@ define([
                 cardToChange.set("status",status);
                 cardToChange.save();
             });
+        },
+        changePageLength: function(e){
+            this.options.pageLength=e.target.value;
         }
-
     });
 
     return CardsTableView;
