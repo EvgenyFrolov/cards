@@ -1,13 +1,14 @@
 define([
     'jquery',
     'underscore',
+    'bootstrap',
     'backbone',
     'backendless',
     'models/userModel',
     'views/sessionView',
     'text!templates/mainWrapperTemplate.html'
 
-], function ( $, _, Backbone, Backendless, UserModel,  SessionView, mainWrapperTemplate ) {
+], function ( $, _, Bootstrap, Backbone, Backendless, UserModel,  SessionView, mainWrapperTemplate ) {
     var  MainView = Backbone.View.extend({
 
         tagName: 'div',
@@ -41,7 +42,6 @@ define([
         },
 
         render: function() {
-            console.log(this.template);
             var tmpl = _.template(this.template);
             this.$el.append(tmpl());
             return this;
