@@ -22,7 +22,7 @@
 
 <body>
     <!-- Static navbar -->
-    <div class="navbar navbar-inverse navbar-static-top">
+ <div class="navbar navbar-inverse navbar-static-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -30,17 +30,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">CARDS</a>
+                <a class="navbar-brand" href="#">CARDS</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li style="display:none; margin-top: 20px;"><a href="#cardsTable">Карточки</a></li>
-                    <li style="display:none; margin-top: 20px;"><a href="#learning">Обучение</a></li>
+                <ul class="nav navbar-nav navbar-right logged-header">
+                    <li style="margin-top: 20px;"><a href="#cardsTable">Карточки</a></li>
+                    <li style="margin-top: 20px;"><a href="#learning">Обучение</a></li>
                     <li>
                         <a href="javascript:void(0)">
-                            <div class="user-pic empty-avatar"></div>
+                            <div class="user-pic"></div>
                         </a>
                     </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right not-logged-header">
+                    <li style="margin-top: 20px;"><a href="javascript:void(0)" class="login-header">Вход</a></li>
+                    <li style="margin-top: 20px;"><a href="javascript:void(0)" class="register-header">Создать аккаунт</a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -48,14 +53,11 @@
     </div>
     <!-- +++++ Main Section (Backbone) +++++ -->
     <div class="container main-container">
+        <div class="view-holder"></div>
     </div>
     <!-- +++++ Footer Section +++++ -->
     <div id="footer">
-        <div class="container">
-            <div class="row">
-                <div id="status"></div>
-            </div>
-        </div>
+
     </div>
 </body>
 

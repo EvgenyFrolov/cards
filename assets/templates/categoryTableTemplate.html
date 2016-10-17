@@ -1,42 +1,43 @@
-<table id="example" class="display compact" cellspacing="0" width="100%">
-    <thead>
-        <tr>
-            <th>Термин</th>
-            <th>Перевод</th>
-            <th>Категория</th>
-            <th>Статус</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>Термин</th>
-            <th>Перевод</th>
-            <th>Категория</th>
-            <th>Статус</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </tfoot>
-    <tbody>
-        <% _.each(cards.models, function(model, index) { %>
-            <tr id="<%= model.get('objectId') %>">
-                <td>
-                    <%= model.get("term") %>
-                </td>
-                <td>
-                    <%= model.get("translation") %>
-                </td>
-                <td><span class="category-label"><%= model.get("category") %></span></td>
-                <td><span class="category-label status <%= (model.get('status')==true) ? '' : 'inactive' %>"><%= (model.get("status")==true) ? "Активна" : "Неактивна" %></span></td>
-                <td>
-                    <button type="button" class="btn btn-default btn-xs remove-btn"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-default btn-xs" disabled><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</button>
-                </td>
+<table id="cards-storage" class="display compact" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Термин</th>
+                <th>Перевод</th>
+                <th>Категория</th>
+                <th>Статус</th>
+                <th></th>
+                <th></th>
             </tr>
-            <% }); %>
-    </tbody>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Термин</th>
+                <th>Перевод</th>
+                <th>Категория</th>
+                <th>Статус</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+        <tbody>
+            <% _.each(cards.models, function(model, index) { %>
+                <tr id="<%= model.get('objectId') %>">
+                    <td>
+                        <%= model.get("term") %>
+                    </td>
+                    <td>
+                        <%= model.get("translation") %>
+                    </td>
+                    <td><span class="category-label"><%= model.get("category") %></span></td>
+                    <td><span class="category-label status <%= (model.get('status')==true) ? '' : 'inactive' %>"><%= (model.get("status")==true) ? "Активна" : "Неактивна" %></span></td>
+                    <td>
+                        <button type="button" class="btn btn-default btn-xs remove-btn"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-default btn-xs" disabled><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</button>
+                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
 </table>
+   
